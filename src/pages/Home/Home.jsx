@@ -1,3 +1,9 @@
+import { BaseLayout } from "../../containers";
+
 export const HomePage = () => {
-  return <>Home</>;
+  return (
+    <BaseLayout>
+      <>Home</>
+    </BaseLayout>
+  );
 };
