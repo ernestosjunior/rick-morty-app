@@ -1,13 +1,13 @@
 import * as actions from "./actions";
 
 export const initialState = {
+  characters: [],
   apiInfo: {
     count: null,
     next: null,
     pages: null,
     prev: null,
   },
-  characters: [],
 };
 
 export const rootReducer = (state, action) => {
@@ -15,7 +15,7 @@ export const rootReducer = (state, action) => {
     case "setApiInfo":
       return actions.setApiInfo(state, action.payload.info);
     case "setCharacters":
-      return actions.setCharacters(action.payload.data);
+      return actions.setCharacters(state, action.payload.data);
     default:
       throw new Error();
   }

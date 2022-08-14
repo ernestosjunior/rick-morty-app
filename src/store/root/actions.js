@@ -1,7 +1,7 @@
 export const setApiInfo = (state, info) => {
-  return { apiInfo: { ...state.apiInfo, ...info } };
+  return { ...state, apiInfo: { ...state.apiInfo, ...info } };
 };
 
-export const setCharacters = (characters) => {
-  return { characters };
+export const setCharacters = (state, characters) => {
+  return { ...state, characters: [...state.characters, ...characters] };
 };
