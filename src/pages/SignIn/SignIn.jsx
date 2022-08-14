@@ -30,6 +30,10 @@ export const SignInPage = memo(() => {
     }
     if (!loading && !!data?.login) {
       setToken(data.login.token);
+      window.localStorage.setItem(
+        "username",
+        JSON.stringify(data.login.user.name)
+      );
       setUser({ isLogged: true, username: data.login.user.name });
       toast.success("Success!", {
         position: "top-right",

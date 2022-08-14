@@ -17,6 +17,7 @@ export const BaseLayout = ({ children }) => {
           if (!isLogged) return navigate("/signin");
 
           removeToken();
+          window.localStorage.removeItem("username");
           setUser({ isLogged: false, username: "" });
           return navigate("/signin");
         }}

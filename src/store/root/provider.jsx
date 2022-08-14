@@ -7,7 +7,7 @@ export const RootProvider = ({ children }) => {
   const [token, setToken, removeToken] = useLocalStorage("token", "");
   const [user, setUser] = useState({
     isLogged: !!token,
-    username: "",
+    username: JSON.parse(window.localStorage.getItem("username")),
   });
   const [rootState, rootDispatch] = useReducer(rootReducer, initialState);
 
