@@ -3,17 +3,8 @@ import classnames from "classnames";
 import { BaseLayout } from "../../containers";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CharacterCard, ModalFilter } from "../../components";
-import {
-  fetchCharacters,
-  fetchMoreCharacters,
-  fetchCharacterByFilter,
-} from "../../services";
 import { useRoot } from "../../store";
-
-const initialFilter = {
-  name: "",
-  species: "",
-};
+import { getCharacters, fetchFilter, handleNext, initialFilter } from "./utils";
 
 export const HomePage = memo(() => {
   const [filter, setFilter] = useState(initialFilter);
@@ -23,49 +14,13 @@ export const HomePage = memo(() => {
     rootState: { characters, apiInfo },
   } = useRoot();
 
-  const getCharacters = async () => {
-    const { data } = await fetchCharacters();
-    rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
-    rootDispatch({
-      type: "setFilteredCharacters",
-      payload: { data: data.results },
-    });
-  };
-
-  const fetchFilter = async () => {
-    let query = "?";
-    if (filter.name) {
-      query = query + `name=${filter.name}`;
-    }
-    if (filter.species) {
-      query = query + `&species=${filter.species}`;
-    }
-
-    const { data } = await fetchCharacterByFilter(query);
-    rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
-    rootDispatch({
-      type: "setFilteredCharacters",
-      payload: { data: data.results },
-    });
-    setOpenModal(false);
-  };
-
   useEffect(() => {
-    getCharacters();
+    getCharacters(rootDispatch);
     // eslint-disable-next-line
   }, []);
 
-  const handleNext = async () => {
-    if (!apiInfo.next) return;
-    const { data } = await fetchMoreCharacters(apiInfo.next);
-    rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
-    rootDispatch({
-      type: "setCharacters",
-      payload: { data: data.results },
-    });
-  };
   const buttonFilterLabel =
-    filter.name || filter.species ? "Remove Filters" : "Filter";
+    !openModal && (filter.name || filter.species) ? "Remove Filters" : "Filter";
   const isRemoveFilters = buttonFilterLabel === "Remove Filters";
 
   return (
@@ -73,7 +28,7 @@ export const HomePage = memo(() => {
       <ModalFilter
         open={openModal}
         closeModal={setOpenModal}
-        fetchByName={fetchFilter}
+        fetchByName={() => fetchFilter(rootDispatch, filter, setOpenModal)}
         setFilter={setFilter}
         filters={filter}
       />
@@ -82,7 +37,7 @@ export const HomePage = memo(() => {
           onClick={() => {
             if (isRemoveFilters) {
               setFilter(initialFilter);
-              return getCharacters();
+              return getCharacters(rootDispatch);
             }
 
             setOpenModal(true);
@@ -101,7 +56,7 @@ export const HomePage = memo(() => {
         </button>
         <InfiniteScroll
           dataLength={characters.length}
-          next={handleNext}
+          next={() => handleNext(rootDispatch, apiInfo)}
           hasMore
           className="w-full h-full flex flex-wrap justify-center items-center gap-8 mt-12 mb-12"
         >
