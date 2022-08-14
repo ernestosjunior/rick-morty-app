@@ -5,6 +5,7 @@ import { BaseLayout } from "../../containers";
 import { Input, Button } from "../../components";
 import { NEW_USER } from "../../services";
 import { useMutation } from "@apollo/client";
+import { setFields } from "../../utils/setFields";
 
 const initialState = { name: "", email: "", password: "" };
 
@@ -13,7 +14,7 @@ export const SignUpPage = memo(() => {
   const [newUser, { data, loading, error }] = useMutation(NEW_USER);
 
   if (!loading && error) {
-    return toast.error("Invalid credentials", {
+    return toast.error("Error.", {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -37,10 +38,6 @@ export const SignUpPage = memo(() => {
     return <Navigate to="/signin" />;
   }
 
-  const setFields = (field, value) => {
-    setField((prev) => ({ ...prev, [field]: value }));
-  };
-
   return (
     <BaseLayout>
       <main className="w-full h-full flex flex-col items-center content-center max-w-[90vw] lg:max-w-[40vw]">
@@ -51,13 +48,13 @@ export const SignUpPage = memo(() => {
           <Input
             id="name"
             placeholder="name"
-            onChange={setFields}
+            onChange={(e) => setFields(setField, "name", e.target.value)}
             value={field.name}
           />
           <Input
             id="email"
             placeholder="email"
-            onChange={setFields}
+            onChange={(e) => setFields(setField, "email", e.target.value)}
             type="email"
             value={field.email}
           />
@@ -65,7 +62,7 @@ export const SignUpPage = memo(() => {
             id="password"
             placeholder="password"
             type="password"
-            onChange={setFields}
+            onChange={(e) => setFields(setField, "password", e.target.value)}
             value={field.password}
           />
           <Button

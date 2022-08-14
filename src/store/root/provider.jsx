@@ -4,9 +4,12 @@ import { RootContext } from "./context";
 import { initialState, rootReducer } from "./reducer";
 
 export const RootProvider = ({ children }) => {
-  const [user, setUser] = useState({ isLogged: false, userName: "" });
-  const [rootState, rootDispatch] = useReducer(rootReducer, initialState);
   const [token, setToken, removeToken] = useLocalStorage("token", "");
+  const [user, setUser] = useState({
+    isLogged: !!token,
+    username: "",
+  });
+  const [rootState, rootDispatch] = useReducer(rootReducer, initialState);
 
   return (
     <RootContext.Provider
@@ -17,7 +20,7 @@ export const RootProvider = ({ children }) => {
         setToken,
         removeToken,
         isLogged: user.isLogged,
-        userName: user.userName,
+        username: user.username,
         setUser,
       }}
     >

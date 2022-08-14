@@ -4,20 +4,20 @@ import { useRoot } from "../../store";
 
 export const BaseLayout = ({ children }) => {
   const navigate = useNavigate();
-  const { isLogged, userName, removeToken } = useRoot();
+  const { isLogged, username, removeToken } = useRoot();
 
   return (
     <main>
       <Header
         isLogged={isLogged}
-        username={userName}
+        username={username}
         redirectToHome={() => navigate("/")}
         redirectToList={() => navigate("/favorites")}
         redirectButton={() => {
           if (!isLogged) return navigate("/signin");
 
           removeToken();
-          return navigate("/");
+          return navigate("/signin");
         }}
       />
       <section className="flex flex-col w-full content-center items-center">

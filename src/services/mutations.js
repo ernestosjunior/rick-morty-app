@@ -8,3 +8,15 @@ export const NEW_USER = gql`
     }
   }
 `;
+
+export const LOGIN = gql`
+  mutation Login($data: NewLogin) {
+    login(data: $data) {
+      user {
+        id
+        name
+      }
+      token
+    }
+  }
+`;
