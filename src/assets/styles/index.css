@@ -17,6 +17,7 @@ input::placeholder {
 }
 button {
   all: unset;
+  cursor: pointer;
 }
 a {
   text-decoration: none;
