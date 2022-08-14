@@ -20,8 +20,8 @@ function App() {
       <RootProvider>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/sign-in" element={<SignInPage />} />
-          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/favorites" element={<FavoritesPage />} />
         </Routes>
       </RootProvider>

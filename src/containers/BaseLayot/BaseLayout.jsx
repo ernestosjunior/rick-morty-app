@@ -4,7 +4,7 @@ import { useRoot } from "../../store";
 
 export const BaseLayout = ({ children }) => {
   const navigate = useNavigate();
-  const { isLogged, userName } = useRoot();
+  const { isLogged, userName, removeToken } = useRoot();
 
   return (
     <>
@@ -13,6 +13,12 @@ export const BaseLayout = ({ children }) => {
         username={userName}
         redirectToHome={() => navigate("/")}
         redirectToList={() => navigate("/favorites")}
+        redirectButton={() => {
+          if (!isLogged) return navigate("/signin");
+
+          removeToken();
+          return navigate("/");
+        }}
       />
       {children}
     </>

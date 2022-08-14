@@ -6,6 +6,7 @@ export const Header = ({
   username,
   redirectToList,
   redirectToHome,
+  redirectButton,
 }) => {
   const label = isLogged ? "LOGOUT" : "LOGIN";
 
@@ -31,6 +32,7 @@ export const Header = ({
           </>
         )}
         <button
+          onClick={redirectButton}
           className={classnames(
             "border border-solid rounded-lg pt-2 pb-2 pl-4 pr-4 font-bold text-dark-color hover:text-white",
             {
