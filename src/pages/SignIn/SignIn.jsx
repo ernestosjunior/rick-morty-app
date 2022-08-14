@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { BaseLayout } from "../../containers";
 import { Input, Button } from "../../components";
 
-export const SignInPage = () => {
+export const SignInPage = memo(() => {
   return (
     <BaseLayout>
       <main className="w-full h-full flex flex-col items-center content-center max-w-[90vw] lg:max-w-[40vw]">
@@ -18,4 +19,4 @@ export const SignInPage = () => {
       </Link>
     </BaseLayout>
   );
-};
+});
