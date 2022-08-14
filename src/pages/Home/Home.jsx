@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from "react";
+import classnames from "classnames";
 import { BaseLayout } from "../../containers";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { CharacterCard, ModalFilter } from "../../components";
@@ -65,6 +66,7 @@ export const HomePage = memo(() => {
   };
   const buttonFilterLabel =
     filter.name || filter.species ? "Remove Filters" : "Filter";
+  const isRemoveFilters = buttonFilterLabel === "Remove Filters";
 
   return (
     <>
@@ -78,14 +80,22 @@ export const HomePage = memo(() => {
       <BaseLayout>
         <button
           onClick={() => {
-            if (buttonFilterLabel === "Remove Filters") {
+            if (isRemoveFilters) {
               setFilter(initialFilter);
               return getCharacters();
             }
 
             setOpenModal(true);
           }}
-          className="self-end flex justify-end mr-6 border border-solid rounded-lg pt-2 pb-2 pl-4 pr-4 font-bold text-dark-color mt-4"
+          className={classnames(
+            "self-end flex justify-end mr-6 border border-solid rounded-lg pt-2 pb-2 pl-4 pr-4 font-bold text-dark-color mt-4 hover:text-white",
+            {
+              "border-[#fb4e5f]": isRemoveFilters,
+              "hover:bg-[#fb4e5f]": isRemoveFilters,
+              "border-[#00c8be]": !isRemoveFilters,
+              "hover:bg-[#00c8be]": !isRemoveFilters,
+            }
+          )}
         >
           {buttonFilterLabel}
         </button>
