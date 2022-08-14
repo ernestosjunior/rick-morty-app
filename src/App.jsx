@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, SignInPage, SignUpPage, FavoritesPage } from "./pages";
+import { RootProvider } from "./store";
 // import { useQuery, gql } from "@apollo/client";
 
 // const GET_LOCATIONS = gql`
@@ -16,12 +17,14 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/favorites" element={<FavoritesPage />} />
-      </Routes>
+      <RootProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
+        </Routes>
+      </RootProvider>
     </BrowserRouter>
   );
 }
