@@ -10,17 +10,19 @@ export const Header = ({
 }) => {
   const label = isLogged ? "LOGOUT" : "LOGIN";
   const path = window.location.pathname;
-  const hasButtonLogin = !path.includes("signin");
+  const hasButtonLogin = !path.includes("signin") && !path.includes("signup");
   return (
     <header className="flex justify-between items-center pr-6 pl-6 h-60">
       <Logo className="w-40" />
       <div className="flex items-center gap-7">
-        <p
-          className="font-bold text-lg text-dark-color cursor-pointer"
-          onClick={redirectToHome}
-        >
-          Home
-        </p>
+        {hasButtonLogin && (
+          <p
+            className="font-bold text-lg text-dark-color cursor-pointer"
+            onClick={redirectToHome}
+          >
+            Home
+          </p>
+        )}
         {isLogged && (
           <>
             <p
