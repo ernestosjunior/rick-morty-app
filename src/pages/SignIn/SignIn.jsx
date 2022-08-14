@@ -1,5 +1,5 @@
-import { memo, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { memo, useState, useLayoutEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BaseLayout } from "../../containers";
 import { Input, Button } from "../../components";
@@ -11,36 +11,38 @@ import { setFields } from "../../utils/setFields";
 const initialState = { email: "", password: "" };
 
 export const SignInPage = memo(() => {
+  const navigate = useNavigate();
   const [field, setField] = useState(initialState);
   const { setToken, setUser } = useRoot();
   const [newLogin, { data, loading, error }] = useMutation(LOGIN);
 
-  if (!loading && error) {
-    return toast.error("Invalid credentials", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  }
-
-  if (!loading && data?.login?.token) {
-    setToken(data.login.token);
-    setUser({ isLogged: true, username: data.login.user.name });
-    toast.success("Success!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    return <Navigate to="/" />;
-  }
+  useLayoutEffect(() => {
+    if (!loading && error) {
+      toast.error("Invalid credentials", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    if (!loading && !!data?.login) {
+      setToken(data.login.token);
+      setUser({ isLogged: true, username: data.login.user.name });
+      toast.success("Success!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return navigate("/");
+    }
+  }, [error, data]);
 
   return (
     <BaseLayout>
@@ -69,7 +71,6 @@ export const SignInPage = memo(() => {
                   },
                 },
               });
-              setField(initialState);
             }}
             label="Login"
             isLoading={loading}

@@ -1,5 +1,5 @@
-import { memo, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { memo, useState, useLayoutEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { BaseLayout } from "../../containers";
 import { Input, Button } from "../../components";
@@ -10,33 +10,36 @@ import { setFields } from "../../utils/setFields";
 const initialState = { name: "", email: "", password: "" };
 
 export const SignUpPage = memo(() => {
+  const navigate = useNavigate();
   const [field, setField] = useState(initialState);
   const [newUser, { data, loading, error }] = useMutation(NEW_USER);
 
-  if (!loading && error) {
-    return toast.error("Error.", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-  }
+  useLayoutEffect(() => {
+    if (!loading && error) {
+      toast.error("Error.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 
-  if (!loading && data?.createUser?.id) {
-    toast.success("Success!", {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    return <Navigate to="/signin" />;
-  }
+    if (!loading && data?.createUser?.id) {
+      toast.success("Success!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return navigate("/signin");
+    }
+  }, [error, data]);
 
   return (
     <BaseLayout>

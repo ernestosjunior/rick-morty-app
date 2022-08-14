@@ -4,7 +4,7 @@ import { useRoot } from "../../store";
 
 export const BaseLayout = ({ children }) => {
   const navigate = useNavigate();
-  const { isLogged, username, removeToken } = useRoot();
+  const { isLogged, username, removeToken, setUser } = useRoot();
 
   return (
     <main>
@@ -17,6 +17,7 @@ export const BaseLayout = ({ children }) => {
           if (!isLogged) return navigate("/signin");
 
           removeToken();
+          setUser({ isLogged: false, username: "" });
           return navigate("/signin");
         }}
       />

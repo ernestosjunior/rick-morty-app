@@ -10,6 +10,7 @@ export const useRoot = () => {
     removeToken,
     isLogged,
     setUser,
+    username,
   } = useContext(RootContext);
 
   return {
@@ -20,5 +21,6 @@ export const useRoot = () => {
     removeToken,
     isLogged,
     setUser,
+    username,
   };
 };

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, SignInPage, SignUpPage, FavoritesPage } from "./pages";
+import { ProtectedRoutes } from "./components";
 import { RootProvider } from "./store";
 // import { useQuery, gql } from "@apollo/client";
 
@@ -19,10 +20,24 @@ function App() {
     <BrowserRouter>
       <RootProvider>
         <Routes>
-          <Route path="/" element={<HomePage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/favorites" element={<FavoritesPage />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoutes>
+                <HomePage />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <ProtectedRoutes>
+                <FavoritesPage />
+              </ProtectedRoutes>
+            }
+          />
         </Routes>
       </RootProvider>
     </BrowserRouter>
