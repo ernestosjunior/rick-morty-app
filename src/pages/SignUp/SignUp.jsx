@@ -24,7 +24,7 @@ export const SignUpPage = memo(() => {
     });
   }
 
-  if (data?.createUser?.id) {
+  if (!loading && data?.createUser?.id) {
     toast.success("Success!", {
       position: "top-right",
       autoClose: 5000,
