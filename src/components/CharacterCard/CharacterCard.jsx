@@ -16,7 +16,7 @@ export const CharacterCard = ({
         className="rounded-t-20 object-cover w-card"
       />
       <div className="w-full flex flex-col items-center content-center">
-        <h1 className="text-dark-color text-2xl font-extrabold mt-[18px]">
+        <h1 className="text-dark-color text-lg font-extrabold mt-[18px]">
           {name}
         </h1>
         <section className="flex items-center">
