@@ -12,6 +12,7 @@ export const CharacterCard = ({
   created,
 }) => {
   const [show, setShow] = useState(false);
+  console.log(created);
   return (
     <article
       className="rounded-20 w-card min-h-card shadow-card relative cursor-pointer"
@@ -97,7 +98,7 @@ export const CharacterCard = ({
               <div>
                 <p className="text-dark-color">Created:</p>
                 <p className="text-dark-color hover:text-orange-color cursor-pointer">
-                  {(created && new Date(created)) || "unknow"}
+                  {created || "unknow"}
                 </p>
               </div>
             </section>

@@ -108,7 +108,17 @@ export const HomePage = memo(() => {
           {!!characters.length &&
             characters.map(
               (
-                { id, image, name, status, species, location, origin },
+                {
+                  id,
+                  image,
+                  name,
+                  status,
+                  species,
+                  location,
+                  origin,
+                  episode,
+                  created,
+                },
                 index
               ) => (
                 <CharacterCard
@@ -119,6 +129,8 @@ export const HomePage = memo(() => {
                   species={species}
                   location={location}
                   origin={origin}
+                  episode={episode}
+                  created={created}
                 />
               )
             )}
