@@ -7,6 +7,7 @@ export const RootProvider = ({ children }) => {
   const [token, setToken, removeToken] = useLocalStorage("token", "");
   const [user, setUser] = useState({
     isLogged: !!token,
+    id: JSON.parse(window.localStorage.getItem("idUser")),
     username: JSON.parse(window.localStorage.getItem("username")),
   });
   const [rootState, rootDispatch] = useReducer(rootReducer, initialState);
@@ -21,6 +22,7 @@ export const RootProvider = ({ children }) => {
         removeToken,
         isLogged: user.isLogged,
         username: user.username,
+        idUser: user.idUser,
         setUser,
       }}
     >

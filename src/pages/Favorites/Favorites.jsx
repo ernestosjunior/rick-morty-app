@@ -1,3 +1,9 @@
+import { BaseLayout } from "../../containers";
+
 export const FavoritesPage = () => {
-  return <>Favorites</>;
+  return (
+    <BaseLayout>
+      <>Favorites</>
+    </BaseLayout>
+  );
 };

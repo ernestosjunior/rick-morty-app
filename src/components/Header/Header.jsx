@@ -23,7 +23,7 @@ export const Header = ({
             Home
           </p>
         )}
-        {isLogged && (
+        {isLogged && !path.includes("favorites") && (
           <>
             <p
               className="font-bold text-lg text-orange-color cursor-pointer"
