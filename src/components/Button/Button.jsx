@@ -10,7 +10,7 @@ export const Button = ({ label, disabled, onClick, isLoading }) => {
       radius="9"
       color="#FFFFFF"
       ariaLabel="three-dots-loading"
-      wrapperStyle={{}}
+      wrapperStyle={{ width: "100%", justifyContent: "center" }}
       wrapperClassName=""
       visible={true}
     />
@@ -21,7 +21,7 @@ export const Button = ({ label, disabled, onClick, isLoading }) => {
       onClick={onClick}
       disabled={disabled}
       className={classnames(
-        "h-[45px] rounded-[5px] flex items-center content-center bg-[#00c8be]",
+        "w-full h-[45px] rounded-[5px] flex items-center justify-center bg-[#00c8be]",
         {
           "opacity-70": isLoading || disabled,
         }
