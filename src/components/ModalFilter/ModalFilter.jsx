@@ -1,6 +1,8 @@
 import { RadioGroup, RadioButton } from "react-radio-buttons";
 import { Input } from "../Input/Input";
 import { Button } from "../Button/Button";
+import { ReactComponent as CloseIcon } from "../../assets/svgs/close.svg";
+import { initialFilter } from "../../pages/Home/utils";
 
 export const ModalFilter = ({
   open,
@@ -13,7 +15,14 @@ export const ModalFilter = ({
 
   return (
     <article className="flex justify-center items-center fixed z-10 h-screen w-screen bg-[rgba(0,0,0,.5)] top-0 left-0">
-      <div className="min-w-[30vw] min-h-[50vh] bg-white rounded-20 flex flex-col items-center pt-4 box-border">
+      <div className="min-w-[30vw] min-h-[50vh] bg-white rounded-20 flex flex-col items-center pt-4 box-border relative">
+        <CloseIcon
+          className="absolute w-[30px] top-1 right-4 cursor-pointer"
+          onClick={() => {
+            setFilter(initialFilter);
+            closeModal(false);
+          }}
+        />
         <p className="w-full pl-4 ">Name</p>
         <section className=" w-full flex gap-4 pl-4 pr-4 justify-center mt-4">
           <Input
