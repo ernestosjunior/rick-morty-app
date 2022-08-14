@@ -9,7 +9,7 @@ export const CharacterCard = ({
   origin,
 }) => {
   return (
-    <article className="rounded-20 w-card min-h-card shadow-card">
+    <article className="rounded-20 w-card min-h-card shadow-card relative">
       <img
         src={image}
         alt="Character"
@@ -22,6 +22,7 @@ export const CharacterCard = ({
         <section className="flex items-center">
           <div
             className={classnames("w-[9px] h-[9px] rounded-[50%] m-1.5", {
+              "bg-[#666666]": status !== "Alive" && status !== "Dead",
               "bg-statusGreen": status === "Alive",
               "bg-statusRed": status === "Dead",
             })}

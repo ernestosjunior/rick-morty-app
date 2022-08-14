@@ -19,7 +19,7 @@ export const BaseLayout = ({ children }) => {
           removeToken();
           window.localStorage.removeItem("username");
           setUser({ isLogged: false, username: "" });
-          return navigate("/signin");
+          return navigate("/");
         }}
       />
       <section className="flex flex-col w-full content-center items-center">
