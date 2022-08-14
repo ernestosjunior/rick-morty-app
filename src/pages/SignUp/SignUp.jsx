@@ -39,6 +39,7 @@ export const SignUpPage = memo(() => {
       });
       return navigate("/signin");
     }
+    // eslint-disable-next-line
   }, [error, data]);
 
   return (

@@ -42,6 +42,7 @@ export const SignInPage = memo(() => {
       });
       return navigate("/");
     }
+    // eslint-disable-next-line
   }, [error, data]);
 
   return (
