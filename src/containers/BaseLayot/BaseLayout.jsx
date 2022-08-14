@@ -7,7 +7,7 @@ export const BaseLayout = ({ children }) => {
   const { isLogged, userName, removeToken } = useRoot();
 
   return (
-    <>
+    <main>
       <Header
         isLogged={isLogged}
         username={userName}
@@ -20,7 +20,9 @@ export const BaseLayout = ({ children }) => {
           return navigate("/");
         }}
       />
-      {children}
-    </>
+      <section className="flex flex-col w-full content-center items-center">
+        {children}
+      </section>
+    </main>
   );
 };

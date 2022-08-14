@@ -7,11 +7,17 @@ body {
     "Helvetica", "Arial", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
 }
-
+input {
+  all: unset;
+  color: rgb(51, 51, 51);
+  padding-left: 4px;
+}
 input::placeholder {
   color: #dbdbdb;
 }
-
 button {
   all: unset;
+}
+a {
+  text-decoration: none;
 }
