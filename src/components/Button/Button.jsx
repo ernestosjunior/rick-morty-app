@@ -1,6 +1,6 @@
 import { ThreeDots } from "react-loader-spinner";
 import classnames from "classnames";
-export const Button = ({ label, disabled, onClick, isLoading }) => {
+export const Button = ({ label, disabled, onClick, isLoading, className }) => {
   const newLabel = !isLoading ? (
     <p className="w-full text-center text-white font-medium">{label}</p>
   ) : (
@@ -21,7 +21,7 @@ export const Button = ({ label, disabled, onClick, isLoading }) => {
       onClick={onClick}
       disabled={disabled}
       className={classnames(
-        "w-full h-[45px] rounded-[5px] flex items-center justify-center bg-[#00c8be]",
+        `w-full h-[45px] rounded-[5px] flex items-center justify-center bg-[#00c8be] ${className}`,
         {
           "opacity-70": isLoading || disabled,
         }

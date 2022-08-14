@@ -5,3 +5,7 @@ export const setApiInfo = (state, info) => {
 export const setCharacters = (state, characters) => {
   return { ...state, characters: [...state.characters, ...characters] };
 };
+
+export const setFilteredCharacters = (state, characters) => {
+  return { ...state, characters };
+};

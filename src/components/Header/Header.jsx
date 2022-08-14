@@ -15,7 +15,7 @@ export const Header = ({
     <header className="flex justify-between items-center pr-6 pl-6 h-60">
       <Logo className="w-40" />
       <div className="flex items-center gap-7">
-        {hasButtonLogin && path !== "/" && (
+        {path !== "/" && (
           <p
             className="font-bold text-lg text-dark-color cursor-pointer"
             onClick={redirectToHome}

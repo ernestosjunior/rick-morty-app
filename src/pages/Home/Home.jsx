@@ -1,22 +1,55 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { BaseLayout } from "../../containers";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { CharacterCard } from "../../components";
-import { fetchCharacters, fetchMoreCharacters } from "../../services";
+import { CharacterCard, ModalFilter } from "../../components";
+import {
+  fetchCharacters,
+  fetchMoreCharacters,
+  fetchCharacterByFilter,
+} from "../../services";
 import { useRoot } from "../../store";
 
+const initialFilter = {
+  name: "",
+  species: "",
+};
+
 export const HomePage = memo(() => {
+  const [filter, setFilter] = useState(initialFilter);
+  const [openModal, setOpenModal] = useState(false);
   const {
     rootDispatch,
     rootState: { characters, apiInfo },
   } = useRoot();
 
+  const getCharacters = async () => {
+    const { data } = await fetchCharacters();
+    rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
+    rootDispatch({
+      type: "setFilteredCharacters",
+      payload: { data: data.results },
+    });
+  };
+
+  const fetchFilter = async () => {
+    let query = "?";
+    if (filter.name) {
+      query = query + `name=${filter.name}`;
+    }
+    if (filter.species) {
+      query = query + `&species=${filter.species}`;
+    }
+
+    const { data } = await fetchCharacterByFilter(query);
+    rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
+    rootDispatch({
+      type: "setFilteredCharacters",
+      payload: { data: data.results },
+    });
+    setOpenModal(false);
+  };
+
   useEffect(() => {
-    const getCharacters = async () => {
-      const { data } = await fetchCharacters();
-      rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
-      rootDispatch({ type: "setCharacters", payload: { data: data.results } });
-    };
     getCharacters();
     // eslint-disable-next-line
   }, []);
@@ -25,32 +58,62 @@ export const HomePage = memo(() => {
     if (!apiInfo.next) return;
     const { data } = await fetchMoreCharacters(apiInfo.next);
     rootDispatch({ type: "setApiInfo", payload: { info: data.info } });
-    rootDispatch({ type: "setCharacters", payload: { data: data.results } });
+    rootDispatch({
+      type: "setCharacters",
+      payload: { data: data.results },
+    });
   };
+  const buttonFilterLabel =
+    filter.name || filter.species ? "Remove Filters" : "Filter";
 
   return (
-    <BaseLayout>
-      <InfiniteScroll
-        dataLength={characters.length}
-        next={handleNext}
-        hasMore
-        className="w-full h-full flex flex-wrap justify-center items-center gap-8 mt-12 mb-12"
-      >
-        {!!characters.length &&
-          characters.map(
-            ({ id, image, name, status, species, location, origin }, index) => (
-              <CharacterCard
-                key={`${id}`}
-                image={image}
-                name={name}
-                status={status}
-                species={species}
-                location={location}
-                origin={origin}
-              />
-            )
-          )}
-      </InfiniteScroll>
-    </BaseLayout>
+    <>
+      <ModalFilter
+        open={openModal}
+        closeModal={setOpenModal}
+        fetchByName={fetchFilter}
+        setFilter={setFilter}
+        filters={filter}
+      />
+      <BaseLayout>
+        <button
+          onClick={() => {
+            if (buttonFilterLabel === "Remove Filters") {
+              setFilter(initialFilter);
+              return getCharacters();
+            }
+
+            setOpenModal(true);
+          }}
+          className="self-end flex justify-end mr-6 border border-solid rounded-lg pt-2 pb-2 pl-4 pr-4 font-bold text-dark-color mt-4"
+        >
+          {buttonFilterLabel}
+        </button>
+        <InfiniteScroll
+          dataLength={characters.length}
+          next={handleNext}
+          hasMore
+          className="w-full h-full flex flex-wrap justify-center items-center gap-8 mt-12 mb-12"
+        >
+          {!!characters.length &&
+            characters.map(
+              (
+                { id, image, name, status, species, location, origin },
+                index
+              ) => (
+                <CharacterCard
+                  key={`${(id, index)}`}
+                  image={image}
+                  name={name}
+                  status={status}
+                  species={species}
+                  location={location}
+                  origin={origin}
+                />
+              )
+            )}
+        </InfiniteScroll>
+      </BaseLayout>
+    </>
   );
 });

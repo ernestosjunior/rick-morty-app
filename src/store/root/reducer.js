@@ -16,6 +16,8 @@ export const rootReducer = (state, action) => {
       return actions.setApiInfo(state, action.payload.info);
     case "setCharacters":
       return actions.setCharacters(state, action.payload.data);
+    case "setFilteredCharacters":
+      return actions.setFilteredCharacters(state, action.payload.data);
     default:
       throw new Error();
   }

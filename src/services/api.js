@@ -9,3 +9,7 @@ export const fetchCharacters = async () => {
 export const fetchMoreCharacters = async (query) => {
   return api.get(query);
 };
+
+export const fetchCharacterByFilter = async (query) => {
+  return api.get(`https://rickandmortyapi.com/api/character/${query}`);
+};
