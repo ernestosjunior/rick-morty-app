@@ -11,3 +11,7 @@ body {
 input::placeholder {
   color: #dbdbdb;
 }
+
+button {
+  all: unset;
+}
