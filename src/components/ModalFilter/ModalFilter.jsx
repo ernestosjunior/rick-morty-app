@@ -35,7 +35,7 @@ export const ModalFilter = ({
         </section>
         <p className="w-full pl-4 mt-[6%] mb-[6%]">Species</p>
         <section className="w-full pl-4 pr-4 ">
-          <div className="">
+          <div className="flex flex-wrap">
             <RadioGroup
               onChange={(value) =>
                 setFilter((prev) => ({ ...prev, species: value }))
@@ -47,6 +47,9 @@ export const ModalFilter = ({
               </RadioButton>
               <RadioButton value="human" pointColor="#00c8be">
                 Human
+              </RadioButton>
+              <RadioButton value="animal" pointColor="#00c8be">
+                Animal
               </RadioButton>
             </RadioGroup>
           </div>
